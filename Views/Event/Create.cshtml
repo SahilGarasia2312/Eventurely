@@ -1,0 +1,106 @@
+@model Eventurely.Web.Models.Event
+
+@{
+    ViewData["Title"] = "Create Event";
+}
+
+<div class="container mt-5 py-5">
+    <h1 class="mb-5 text-center text-dark" data-aos="zoom-in" data-aos-duration="1000">Create a New Event</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success shadow-sm animate-pulse mx-auto" style="max-width: 600px;" data-aos="fade-in" data-aos-delay="100">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger shadow-sm mx-auto" style="max-width: 600px;" data-aos="fade-in" data-aos-delay="100">
+            <strong>Please correct the errors below:</strong>
+            <ul class="mb-0">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <form asp-action="Create" method="post" enctype="multipart/form-data" class="event-form-card p-5 rounded-3 shadow-lg" data-aos="fade-up" data-aos-duration="800" aria-labelledby="createEventHeading">
+                <div class="mb-4 position-relative" data-aos="fade-right" data-aos-delay="200">
+                    <label asp-for="Title" class="form-label fw-bold text-dark"></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-0"><i class="bi bi-type-h1 text-primary"></i></span>
+                        <input asp-for="Title" class="form-control event-input rounded-end" placeholder="Event Title" aria-describedby="titleHelp" />
+                    </div>
+                    <span asp-validation-for="Title" class="text-danger d-block mt-1"></span>
+                </div>
+                <div class="mb-4 position-relative" data-aos="fade-right" data-aos-delay="300">
+                    <label asp-for="Date" class="form-label fw-bold text-dark"></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-0"><i class="bi bi-calendar-event text-primary"></i></span>
+                        <input asp-for="Date" class="form-control event-input rounded-end" type="datetime-local" aria-describedby="dateHelp" />
+                    </div>
+                    <span asp-validation-for="Date" class="text-danger d-block mt-1"></span>
+                </div>
+                <div class="mb-4 position-relative" data-aos="fade-right" data-aos-delay="400">
+                    <label asp-for="Venue" class="form-label fw-bold text-dark"></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-0"><i class="bi bi-geo-alt text-primary"></i></span>
+                        <input asp-for="Venue" class="form-control event-input rounded-end" placeholder="Venue" aria-describedby="venueHelp" />
+                    </div>
+                    <span asp-validation-for="Venue" class="text-danger d-block mt-1"></span>
+                </div>
+                <div class="mb-4 position-relative" data-aos="fade-right" data-aos-delay="500">
+                    <label asp-for="Description" class="form-label fw-bold text-dark"></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-0 align-items-start pt-2"><i class="bi bi-text-left text-primary"></i></span>
+                        <textarea asp-for="Description" class="form-control event-input rounded-end" rows="5" placeholder="Describe the event" aria-describedby="descriptionHelp"></textarea>
+                    </div>
+                    <span asp-validation-for="Description" class="text-danger d-block mt-1"></span>
+                </div>
+                <div class="mb-4 position-relative" data-aos="fade-right" data-aos-delay="600">
+                    <label for="imageFile" class="form-label fw-bold text-dark">Event Image (Optional)</label>
+                    <div class="input-group">
+                        <input type="file" name="imageFile" id="imageFile" class="form-control event-input" accept="image/*" aria-describedby="imageFileHelp" onchange="previewImage(this)" />
+                    </div>
+                    <span class="text-danger d-block mt-1" id="imageFileError"></span>
+                    <img id="imagePreview" class="img-fluid rounded mt-2" style="max-height: 150px; display: none;" alt="Image Preview" />
+                </div>
+                <div class="d-flex justify-content-between align-items-center" data-aos="fade-up" data-aos-delay="700">
+                    <button type="submit" class="btn event-btn px-5 py-2 fw-bold" onclick="this.disabled=true;this.innerHTML='Creating...';this.form.submit();">Create Event</button>
+                    <a asp-action="Index" asp-controller="Event" class="btn event-btn-outline px-5 py-2 fw-bold">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        function previewImage(input) {
+            const img = document.getElementById('imagePreview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                img.style.display = 'none';
+                img.src = '';
+            }
+        }
+    </script>
+}

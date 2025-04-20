@@ -1,0 +1,45 @@
+@model IEnumerable<Eventurely.Web.Models.Event>
+@{
+    ViewData["Title"] = "Events";
+}
+
+<section class="events-section py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 data-aos="fade-right">All Events</h2>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Admin" asp-action="ManageEvents" class="btn btn-outline-primary" data-aos="fade-left">Manage Events</a>
+            }
+        </div>
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var evt in Model)
+                {
+                    <div class="col-md-4" data-aos="fade-up">
+                        <partial name="_EventCard" model="evt" />
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="col-12 text-center py-5">
+                <p class="lead text-muted">No events available at the moment.</p>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Back to Home</a>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+    </script>
+}

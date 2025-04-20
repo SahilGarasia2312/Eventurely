@@ -1,0 +1,788 @@
+/* CSS Variables for Event-Themed Theming */
+
+:root {
+    --teal: #14b8a6;
+    /* Vibrant teal for icons and accents */
+    --purple: #8b5cf6;
+    /* Rich purple for gradients */
+    --purple-dark: #6d28d9;
+    /* Darker purple for hover states */
+    --form-bg: rgba(255, 255, 255, 0.95);
+    /* Semi-transparent white for card */
+    --white: #ffffff;
+    --text-muted: #6c757d;
+    --primary: #1e3a8a;
+    /* Deep navy blue for professional elegance */
+    --primary-dark: #172554;
+    --secondary: #64748b;
+    /* Slate gray for subtle sophistication */
+    --secondary-dark: #475569;
+    --accent: #f43f5e;
+    /* Vibrant rose for attractive pop */
+    --highlight: #facc15;
+    /* Warm gold for premium appeal */
+    --background: #f1f5f9;
+    /* Light slate for clean backdrop */
+    --text: #1f2a44;
+    /* Dark slate for readability */
+    --text-muted: #94a3b8;
+    /* Soft gray for muted text */
+    --dark: #111827;
+    /* Near-black for depth */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+
+/* Reset and Base Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.7;
+    color: var(--text);
+    background-color: var(--background);
+    font-size: 16px;
+}
+
+
+/* Typography */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    color: var(--dark);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+
+/* Navbar */
+
+.navbar {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    /* Professional navy to rose gradient */
+    padding: 1.2rem 0;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.navbar-brand:hover {
+    color: var(--highlight);
+    transform: scale(1.05);
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    position: relative;
+    transition: var(--transition);
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    color: var(--highlight) !important;
+    transform: scale(1.05);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--highlight);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link:focus::after {
+    width: 100%;
+}
+
+
+/* Hero Section */
+
+.hero-section {
+    min-height: 600px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/images/ghiblieventart.jpg') no-repeat center center;
+    background-size: cover;
+    filter: blur(8px);
+    z-index: -1;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.hero-section h1 {
+    color: var(--white);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.hero-section p {
+    color: var(--text-muted);
+}
+
+.custom-shape-divider-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 120px;
+}
+
+.custom-shape-divider-bottom .shape-fill {
+    fill: #FFFFFF;
+}
+
+.custom-shape-divider-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-bottom svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 100px;
+    fill: var(--background);
+}
+
+
+/* Features Section */
+
+.features-section {
+    background: var(--white);
+}
+
+.feature-card {
+    border-radius: 1rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: var(--transition);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(244, 63, 94, 0.5);
+    /* Matches rose accent */
+}
+
+
+/* Events Section */
+
+.events-section {
+    background: linear-gradient(135deg, var(--background) 0%, #e2e8f0 100%);
+    /* Subtle slate gradient */
+}
+
+.event-card {
+    border-radius: 1rem;
+    border: 2px dashed var(--accent);
+    background: var(--white);
+    transition: var(--transition);
+    position: relative;
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.event-card img {
+    border-radius: 1rem 1rem 0 0;
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+}
+
+
+/* Testimonials Section */
+
+.testimonials-section {
+    background: var(--white);
+}
+
+.testimonial-item {
+    padding: 2rem;
+    border-radius: 1rem;
+    background: var(--background);
+    box-shadow: var(--shadow);
+}
+
+
+/* Form Card */
+
+.event-form-card {
+    background: var(--form-bg);
+    border: 2px solid var(--teal);
+    border-radius: 1.5rem;
+    backdrop-filter: blur(5px);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.event-form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.2), transparent);
+    transform: skewX(-20deg);
+    z-index: -1;
+}
+
+.event-form-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Form Inputs */
+
+.event-input {
+    border: 2px solid var(--teal);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    transition: var(--transition);
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.event-input:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+    background: var(--white);
+    outline: none;
+}
+
+.input-group-text {
+    border: 2px solid var(--teal);
+    border-right: none;
+    border-radius: 0.75rem 0 0 0.75rem;
+    color: var(--teal);
+    transition: var(--transition);
+}
+
+.event-input:focus+.input-group-text,
+.event-input:focus~.input-group-text {
+    border-color: var(--purple);
+}
+
+
+/* Form Buttons */
+
+.event-btn {
+    background: linear-gradient(135deg, var(--teal) 0%, var(--purple) 100%);
+    border: none;
+    border-radius: 0.75rem;
+    color: var(--white);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.event-btn:hover {
+    background: linear-gradient(135deg, var(--teal) 0%, var(--purple-dark) 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+}
+
+.event-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease, height 0.5s ease;
+}
+
+.event-btn:hover::after {
+    width: 200px;
+    height: 200px;
+}
+
+.event-btn-outline {
+    background: transparent;
+    border: 2px solid var(--teal);
+    color: var(--teal);
+    border-radius: 0.75rem;
+    transition: var(--transition);
+}
+
+.event-btn-outline:hover {
+    background: var(--purple);
+    border-color: var(--purple);
+    color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+}
+
+.testimonial-text {
+    font-style: italic;
+    color: var(--text);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);
+}
+
+
+/* Auth Section */
+
+.auth-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-attachment: fixed;
+    background-image: url('/images/loginscreenbg.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.auth-section .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    /* Using var(--white) with opacity */
+    backdrop-filter: blur(6px);
+    /* Reduced blur for visibility */
+    z-index: 0;
+}
+
+.auth-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.ticket-card {
+    border-radius: 1.2rem;
+    background: var(--form-bg);
+    position: relative;
+    overflow: hidden;
+    border: 2px dashed var(--accent);
+}
+
+.ticket-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(244, 63, 94, 0.2), transparent);
+    transform: skewX(-20deg);
+}
+
+.ticket-card .card-body {
+    position: relative;
+    z-index: 1;
+}
+
+.ticket-input {
+    border: 2px solid var(--primary);
+    border-radius: 0.5rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ticket-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
+}
+
+
+/* Buttons */
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    /* Navy to rose gradient */
+    border-color: var(--primary);
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: var(--transition);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #e11d48 100%);
+    /* Darker navy to deep rose */
+    border-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(244, 63, 94, 0.5);
+}
+
+.btn-outline-light {
+    border-color: var(--white);
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.btn-outline-light:hover {
+    background: var(--highlight);
+    color: var(--dark);
+    transform: translateY(-2px);
+}
+
+.glow-btn {
+    box-shadow: 0 0 15px rgba(244, 63, 94, 0.5);
+}
+
+.glow-btn:hover {
+    box-shadow: 0 0 25px rgba(244, 63, 94, 0.7);
+}
+
+.btn-primary:disabled {
+    background: var(--secondary);
+    border-color: var(--secondary);
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* Footer */
+
+.footer {
+    background: linear-gradient(135deg, var(--dark) 0%, #0f172a 100%);
+    /* Deep slate gradient */
+    padding: 3rem 0;
+}
+
+.footer h5,
+.footer h6 {
+    color: var(--white);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.footer .text-muted {
+    color: var(--text-muted) !important;
+}
+
+.footer .hover-link {
+    color: var(--text-muted);
+    transition: var(--transition);
+    position: relative;
+    display: inline-block;
+}
+
+.footer .hover-link:hover {
+    color: var(--accent) !important;
+    transform: translateX(5px);
+}
+
+.social-icon {
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.social-icon:hover,
+.social-icon:focus {
+    color: var(--highlight) !important;
+    transform: translateY(-5px);
+}
+
+
+/* Animations */
+
+.animated-image {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+/* Utility Classes */
+
+.shadow-sm {
+    box-shadow: var(--shadow);
+}
+
+.mt-6 {
+    margin-top: 4rem;
+}
+
+.mb-6 {
+    margin-bottom: 4rem;
+}
+
+.py-6 {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.navbar-brand img {
+    max-height: 40px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
+.navbar-brand {
+    padding: 0.25rem 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@media (max-width: 576px) {
+    .navbar-brand img {
+        max-height: 30px;
+    }
+    .navbar-brand span {
+        font-size: 1.2rem;
+    }
+}
+
+.overlay {
+    z-index: 0;
+}
+
+.container {
+    z-index: 1;
+}
+
+.ticket-card {
+    background: rgba(255, 255, 255, 0.95);
+    /* Slight transparency for card */
+    border-radius: 15px;
+}
+
+.glow-btn {
+    transition: box-shadow 0.3s ease;
+}
+
+.glow-btn:hover {
+    box-shadow: 0 0 15px rgba(13, 110, 253, 0.5);
+    /* Blue glow effect */
+}
+
+.event-header {
+    min-height: 400px;
+    background: linear-gradient(135deg, #007bff, #6610f2);
+    color: white;
+}
+
+.event-cover {
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.5;
+}
+
+.overlay {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.card {
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+
+/* Responsive Adjustments */
+
+@media (max-width: 992px) {
+    .navbar-nav {
+        padding: 1rem 0;
+    }
+    .nav-link {
+        padding: 0.75rem 0;
+        text-align: center;
+    }
+    .footer .row {
+        text-align: center;
+    }
+    .footer .col-md-4,
+    .footer .col-md-2,
+    .footer .col-md-3 {
+        margin-bottom: 2.5rem;
+    }
+    .hero-section {
+        min-height: 500px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+    .btn-primary,
+    .btn-outline-light {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+    .hero-section {
+        min-height: 400px;
+    }
+    .ticket-card .card-body {
+        padding: 2rem;
+    }
+}
+
+
+/* AOS Animations */
+
+[data-aos] {
+    visibility: hidden;
+}
+
+[data-aos].aos-animate {
+    visibility: visible;
+}
+
+
+/* Accessibility */
+
+:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}

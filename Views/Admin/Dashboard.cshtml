@@ -1,0 +1,273 @@
+<!-- Views/Admin/Dashboard.cshtml - Complete Version -->
+@model  Eventurely.Web.Models.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container-fluid py-4">
+    <h1 class="mb-4">Admin Dashboard</h1>
+    
+    <!-- Overview Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Total Events</h5>
+                    <h2 class="display-4 mb-0">@Model.TotalEvents</h2>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a href="@Url.Action("ManageEvents", "Admin")" class="text-white text-decoration-none">View Details</a>
+                    <i class="bi bi-calendar-event fs-4"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Active Events</h5>
+                    <h2 class="display-4 mb-0">@Model.ActiveEvents</h2>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a href="@Url.Action("ActiveEvents", "Admin")" class="text-white text-decoration-none">View Details</a>
+                    <i class="bi bi-calendar-check fs-4"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Total Registrations</h5>
+                    <h2 class="display-4 mb-0">@Model.TotalRegistrations</h2>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a href="@Url.Action("Registrations", "Admin")" class="text-white text-decoration-none">View Details</a>
+                    <i class="bi bi-people fs-4"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-warning text-white h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <h2 class="display-4 mb-0">@Model.TotalUsers</h2>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a href="@Url.Action("Users", "Admin")" class="text-white text-decoration-none">View Details</a>
+                    <i class="bi bi-person fs-4"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Charts Section -->
+    <div class="row mb-4">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Registration Trends</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="registrationChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Popular Events</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="eventsChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Activities Section -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Recent Registrations</h5>
+            <a href="@Url.Action("Registrations", "Admin")" class="btn btn-sm btn-outline-primary">View All</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Event</th>
+                            <th>Registration Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var registration in Model.RecentRegistrations)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar bg-light rounded-circle text-center me-2" style="width: 32px; height: 32px;">
+                                            <span class="text-primary">@registration.UserName.Substring(0, 1).ToUpper()</span>
+                                        </div>
+                                        <div>@registration.UserName</div>
+                                    </div>
+                                </td>
+                                <td>@registration.EventTitle</td>
+                                <td>@registration.RegistrationTime.ToString("MMM dd, yyyy HH:mm")</td>
+                                <td>
+                                    @if (registration.AttendanceStatus == "Attended")
+                                    {
+                                        <span class="badge bg-success">Attended</span>
+                                    }
+                                    else if (registration.AttendanceStatus == "NoShow")
+                                    {
+                                        <span class="badge bg-danger">No Show</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-primary">Registered</span>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="@Url.Action("ViewRegistration", "Admin", new { id = registration.Id })" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-outline-success mark-attended" data-id="@registration.Id">
+                                            <i class="bi bi-check-lg"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Registration Trends Chart
+        var ctxRegistration = document.getElementById('registrationChart').getContext('2d');
+        var registrationChart = new Chart(ctxRegistration, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.RegistrationTrends.Select(r => r.Date.ToString("MMM dd")))),
+                datasets: [{
+                    label: 'Registrations',
+                    data: @Html.Raw(Json.Serialize(Model.RegistrationTrends.Select(r => r.Count))),
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                }
+            }
+        });
+
+        // Popular Events Chart
+        var ctxEvents = document.getElementById('eventsChart').getContext('2d');
+        var eventsChart = new Chart(ctxEvents, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.PopularEvents.Select(e => e.Title))),
+                datasets: [{
+                    label: 'Registrations',
+                    data: @Html.Raw(Json.Serialize(Model.PopularEvents.Select(e => e.RegistrationsCount))),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                }
+            }
+        });
+
+        // Mark attendance functionality
+        $(document).ready(function() {
+            $('.mark-attended').click(function() {
+                var id = $(this).data('id');
+                
+                $.ajax({
+                    url: '@Url.Action("MarkAttendance", "Admin")',
+                    type: 'POST',
+                    data: { id: id, status: 'Attended' },
+                    success: function(response) {
+                        if (response.success) {
+                            // Update UI to show attended status
+                            toastr.success('Attendance marked successfully');
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error('Failed to mark attendance');
+                        }
+                    },
+                    error: function() {
+                        toastr.error('An error occurred while processing your request');
+                    }
+                });
+            });
+            
+            // Initialize toastr notification settings
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "3000"
+            };
+        });
+    </script>
+}

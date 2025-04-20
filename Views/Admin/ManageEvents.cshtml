@@ -1,0 +1,34 @@
+@model IEnumerable<Eventurely.Web.Models.Event>
+
+@{
+    ViewData["Title"] = "Manage Events";
+}
+
+<h1>Manage Events</h1>
+
+<a href="@Url.Action("Create", "Event")" class="btn btn-primary">Add New Event</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var eventItem in Model)
+        {
+            <tr>
+                <td>@eventItem.Title</td>
+                <td>@eventItem.Date.ToString("MM/dd/yyyy")</td>
+                <td>@eventItem.Venue</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Event", new { id = eventItem.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", "Event", new { id = eventItem.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

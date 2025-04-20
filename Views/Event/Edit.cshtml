@@ -1,0 +1,72 @@
+@model Eventurely.Web.Models.Event
+
+@{
+    ViewData["Title"] = "Edit Event";
+}
+
+<div class="container py-5">
+    <h1>Edit Event</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Date" class="form-label"></label>
+                    <input asp-for="Date" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Venue" class="form-label"></label>
+                    <input asp-for="Venue" class="form-control" />
+                    <span asp-validation-for="Venue" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="imageFile" class="form-label">Event Image (Optional)</label>
+                    <input type="file" name="imageFile" id="imageFile" class="form-control" accept="image/*" onchange="previewImage(this)" />
+                    <span class="text-danger" id="imageFileError"></span>
+                    @if (!string.IsNullOrEmpty(Model.ImagePath))
+                    {
+                        <div class="mt-2">
+                            <p>Current Image:</p>
+                            <img src="/images/events/@Model.ImagePath" class="img-fluid rounded" style="max-height: 150px;" alt="Current Event Image" />
+                        </div>
+                    }
+                    <img id="imagePreview" class="img-fluid rounded mt-2" style="max-height: 150px; display: none;" alt="Image Preview" />
+                </div>
+                <button type="submit" class="btn btn-primary">Update Event</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function previewImage(input) {
+            const img = document.getElementById('imagePreview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                img.style.display = 'none';
+                img.src = '';
+            }
+        }
+    </script>
+}

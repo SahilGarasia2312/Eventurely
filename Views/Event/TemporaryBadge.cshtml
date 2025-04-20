@@ -1,0 +1,83 @@
+@model Eventurely.Models.ViewModels.BadgeViewModel
+
+@{
+    ViewData["Title"] = "Temporary Event Badge";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 mb-4">
+                <div class="card-body p-0">
+                    <div class="row g-0">
+                        <div class="col-lg-4 bg-primary text-white p-4 d-flex flex-column">
+                            <div class="mb-4 text-center">
+                                <h5 class="fw-bold mb-0">EVENTURELY</h5>
+                                <p class="small opacity-75">Temporary Badge</p>
+                            </div>
+                            
+                            <div class="text-center flex-grow-1 d-flex flex-column justify-content-center">
+                                <div class="avatar-placeholder bg-white text-primary rounded-circle mx-auto mb-3" style="width: 100px; height: 100px; font-size: 2.5rem; line-height: 100px;">
+                                    @Model.UserInitials
+                                </div>
+                                <h4 class="fw-bold mb-1">@Model.UserName</h4>
+                                <p class="mb-0 opacity-75">@Model.UserEmail</p>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <div class="badge-qr text-center">
+                                    <img src="@Model.QrCodeUrl" alt="Temporary QR Code" class="img-fluid bg-white p-1 rounded" style="max-width: 150px;">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-8 p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-4">
+                                <div>
+                                    <h3 class="mb-1">@Model.EventTitle</h3>
+                                    <p class="text-muted mb-0">
+                                        <i class="bi bi-calendar-event me-1"></i>
+                                        @Model.EventDate.ToString("MMMM dd, yyyy") at @Model.EventDate.ToString("h:mm tt")
+                                    </p>
+                                    <p class="text-muted mb-0">
+                                        <i class="bi bi-geo-alt me-1"></i>
+                                        @Model.EventVenue
+                                    </p>
+                                </div>
+                                <div class="badge bg-success py-2 px-3">
+                                    <i class="bi bi-check-circle me-1"></i> REGISTERED
+                                </div>
+                            </div>
+                            
+                            <hr class="my-3">
+                            
+                            <div class="row mb-4">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <h6>Registration ID</h6>
+                                    <p class="badge bg-light text-dark fs-6">@Model.RegistrationId</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6>Registration Date</h6>
+                                    <p class="text-muted">@Model.RegistrationDate.ToString("MMMM dd, yyyy h:mm tt")</p>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info d-flex">
+                                <i class="bi bi-info-circle fs-5 me-2"></i>
+                                <div>
+                                    <p class="mb-0">This is a temporary badge. You can view your official badge later in your account.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-end mt-4 gap-2">
+                                <a href="@Url.Action("Details", "Event", new { id = Model.EventId })" class="btn btn-primary">
+                                    <i class="bi bi-arrow-left me-1"></i> Back to Event
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
